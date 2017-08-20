@@ -26,6 +26,11 @@ std::string hasData(std::string s) {
   return "";
 }
 
+/**
+ * communicates with the Term 2 Simulator receiving data measurements, calls a function to run the Kalman filter, calls a function to calculate RMSE
+ *
+ * @return
+ */
 int main()
 {
   uWS::Hub h;

@@ -3,6 +3,10 @@
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
+/**
+ * defines the predict function, the update function for lidar, and the update function for radar
+ */
+
 KalmanFilter::KalmanFilter() {}
 
 KalmanFilter::~KalmanFilter() {}

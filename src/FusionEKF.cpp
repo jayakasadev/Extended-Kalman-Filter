@@ -8,6 +8,11 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using std::vector;
 
+/**
+ * initializes the filter, calls the predict function, calls the update function
+ */
+
+
 /*
  * Constructor.
  */
