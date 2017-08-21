@@ -64,6 +64,11 @@ public:
    */
   void UpdateEKF(const Eigen::VectorXd &z);
 
+  /**
+   * Common code for Kalman Filter and Extended Kalman Filter
+   * @param y
+   */
+  void KF(const Eigen::VectorXd &y);
 };
 
 #endif /* KALMAN_FILTER_H_ */
