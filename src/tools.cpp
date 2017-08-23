@@ -21,7 +21,7 @@ Tools::~Tools() {}
  * @return
  */
 VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations, const vector<VectorXd> &ground_truth) {
-    cout << "Tools::CalculateRMSE" << endl;
+    // cout << "Tools::CalculateRMSE" << endl;
     VectorXd rmse(4);
     rmse << 0, 0, 0, 0;
     // cout << "rmse: " << endl;
@@ -75,7 +75,7 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations, const vector<
  * @return
  */
 MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
-    cout << "Tools::CalculateJacobian" << endl;
+    // cout << "Tools::CalculateJacobian" << endl;
     MatrixXd jacobian(3, 4);
 
     float px = x_state(0);
@@ -104,6 +104,6 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
                 - px / calc1, px / calc1, 0, 0,
             (py * (calc4 - calc5)) / calc3, (px * (calc5 - calc4)) / calc3, px / calc2, py / calc2;
 
-    cout << jacobian << endl;
+    // cout << jacobian << endl;
     return jacobian;
 }

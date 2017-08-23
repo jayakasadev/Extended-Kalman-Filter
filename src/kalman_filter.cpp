@@ -25,7 +25,7 @@ void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in,
  * Prediction Function
  */
 void KalmanFilter::Predict() {
-    cout << "KalmanFilter::Predict" << endl;
+    // cout << "KalmanFilter::Predict" << endl;
     // calculating the prediction vector -> x'
     x_ = F_ * x_;
 
@@ -41,16 +41,16 @@ void KalmanFilter::Predict() {
  * @param z
  */
 void KalmanFilter::Update(const VectorXd &z) {
-    cout << "KalmanFilter::Update" << endl;
+    // cout << "KalmanFilter::Update" << endl;
 
     // for lidar or laser measurements
 
     // comparison function
     VectorXd y = z - H_ * x_;
-    cout << "y: " << y << endl;
+    // cout << "y: " << y << endl;
 
     // calling the kalman filter common equations
-    cout << "Calling KF" << y << endl;
+    // cout << "Calling KF" << y << endl;
     KF(y);
 }
 
@@ -61,7 +61,7 @@ void KalmanFilter::Update(const VectorXd &z) {
  */
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
 
-    cout << "KalmanFilter::UpdateEKF: "<< z << " " << z.size() << endl;
+    // cout << "KalmanFilter::UpdateEKF: "<< z << " " << z.size() << endl;
 
     // float px = z(0);
     // float py = z(1);
@@ -78,7 +78,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     float phi = z(1);
     float dot = z(2);
 
-    cout << rho << " " << phi << " " << dot << endl;
+    // cout << rho << " " << phi << " " << dot << endl;
 
     /*
     if(fabs(rho) < 0.0001){
@@ -94,14 +94,14 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     VectorXd h(3);
     h << rho, phi, dot;
 
-    cout << "h: " << h << endl;
+    // cout << "h: " << h << endl;
 
     VectorXd y = z - h;
 
-    cout << "y: " << y << endl;
+    // cout << "y: " << y << endl;
 
     // calling the kalman filter common equations
-    cout << "Calling KF" << y << endl;
+    // cout << "Calling KF" << y << endl;
     KF(y);
 }
 
@@ -112,7 +112,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
  */
 void KalmanFilter::KF(const VectorXd &y) {
 
-    cout << "KalmanFilter::KF" << endl;
+    // cout << "KalmanFilter::KF" << endl;
 
     // H transpose
     MatrixXd HT = H_.transpose();
