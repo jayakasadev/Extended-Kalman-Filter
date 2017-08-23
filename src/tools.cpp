@@ -21,25 +21,51 @@ Tools::~Tools() {}
  * @return
  */
 VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations, const vector<VectorXd> &ground_truth) {
+    cout << "Tools::CalculateRMSE" << endl;
     VectorXd rmse(4);
     rmse << 0, 0, 0, 0;
+    // cout << "rmse: " << endl;
+    // cout << rmse << endl;
 
     // if there are no estimations or the number of estimations do not match the number of ground truths, return empty
     // rmse
-    if(estimations.size() == 0 || estimations.size() != ground_truth.size()) return rmse;
+    if(estimations.size() == 0 || estimations.size() != ground_truth.size()){
+        cout << "\n\tError: Invalid estimation or ground_truth data" << endl;
+        return rmse;
+    }
 
     // accumulate squared residuals
-    for(int  i = 0; i < estimations.size(); i++){
+    for(unsigned int  i = 0; i < estimations.size(); i++){
         // getting the difference between the calculated and expected
-        VectorXd residual = (estimations[i] - ground_truth[1]);
+        /*
+        cout << "estimations[" << i << "]: ";
+        cout << estimations[i].size() << endl;
+        cout << "ground_truth[" << i << "]: ";
+        cout << ground_truth[i].size() << endl;
+        cout << "residual: " << endl;
+        cout << estimations[i] - ground_truth[i] << endl;
+         */
+        VectorXd residual = estimations[i] - ground_truth[i];
 
         // squaring the result
         // adding to rmse
-        rmse += residual.array().square();
+        //cout << "residual: " << endl;
+        //cout << residual << endl;
+
+        residual = residual.array().square();
+
+        //cout << "residual: " << endl;
+        //cout << residual << endl;
+
+        rmse += residual;
+        //cout << "rmse: " << endl;
+        //cout << rmse << endl;
     }
     // averaging over the number of estimates and returning the square root
-    return (rmse / estimations.size()).array().sqrt();
+    rmse = (rmse / estimations.size()).array().sqrt();
 
+    cout << rmse << endl;
+    return rmse;
 }
 
 /**
@@ -49,6 +75,7 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations, const vector<
  * @return
  */
 MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
+    cout << "Tools::CalculateJacobian" << endl;
     MatrixXd jacobian(3, 4);
 
     float px = x_state(0);
@@ -62,7 +89,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
     // check for division by zero
     // TODO create an external class or other definition that contains all hyperparameters
     if(fabs(calc1) < 0.0001){
-        cout << "CalculateJacobian () - Error - Division by Zero" << endl;
+        cout << "\n\tError: Division by Zero" << endl;
         return jacobian;
     }
 
@@ -77,5 +104,6 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
                 - px / calc1, px / calc1, 0, 0,
             (py * (calc4 - calc5)) / calc3, (px * (calc5 - calc4)) / calc3, px / calc2, py / calc2;
 
+    cout << jacobian << endl;
     return jacobian;
 }

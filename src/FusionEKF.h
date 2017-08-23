@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <iostream>
 #include "kalman_filter.h"
 #include "tools.h"
 

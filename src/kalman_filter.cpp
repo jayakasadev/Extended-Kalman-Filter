@@ -25,6 +25,7 @@ void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in,
  * Prediction Function
  */
 void KalmanFilter::Predict() {
+    cout << "KalmanFilter::Predict" << endl;
     // calculating the prediction vector -> x'
     x_ = F_ * x_;
 
@@ -40,6 +41,8 @@ void KalmanFilter::Predict() {
  * @param z
  */
 void KalmanFilter::Update(const VectorXd &z) {
+    cout << "KalmanFilter::Update" << endl;
+
     // for lidar or laser measurements
 
     // comparison function
@@ -55,6 +58,8 @@ void KalmanFilter::Update(const VectorXd &z) {
  * @param z
  */
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
+
+    cout << "KalmanFilter::UpdateEKF" << endl;
 
     float px = z(0);
     float py = z(1);
@@ -77,6 +82,8 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 
     VectorXd y = z - h;
 
+    cout << "y: " << y << endl;
+
     // calling the kalman filter common equations
     KF(y);
 }
@@ -87,6 +94,8 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
  * @param z
  */
 void KalmanFilter::KF(const VectorXd &y) {
+
+    cout << "KalmanFilter::KF" << endl;
 
     // H transpose
     MatrixXd HT = H_.transpose();
