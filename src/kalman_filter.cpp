@@ -47,8 +47,10 @@ void KalmanFilter::Update(const VectorXd &z) {
 
     // comparison function
     VectorXd y = z - H_ * x_;
+    cout << "y: " << y << endl;
 
     // calling the kalman filter common equations
+    cout << "Calling KF" << y << endl;
     KF(y);
 }
 
@@ -59,16 +61,26 @@ void KalmanFilter::Update(const VectorXd &z) {
  */
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
 
-    cout << "KalmanFilter::UpdateEKF" << endl;
+    cout << "KalmanFilter::UpdateEKF: "<< z << " " << z.size() << endl;
 
-    float px = z(0);
-    float py = z(1);
-    float vx = z(2);
-    float vy = z(3);
+    // float px = z(0);
+    // float py = z(1);
+    // float vx = z(2);
+    // float vy = z(3);
 
-    float rho = sqrt(pow(px, 2) + pow(py, 2));
-    float phi = atan2(py, px);
-    float dot;
+    // cout << px << " " << py << " " << vx << " " << vy << endl;
+
+    // float rho = sqrt(pow(px, 2) + pow(py, 2));
+    // float phi = atan2(py, px);
+    // float dot;
+
+    float rho = z(0);
+    float phi = z(1);
+    float dot = z(2);
+
+    cout << rho << " " << phi << " " << dot << endl;
+
+    /*
     if(fabs(rho) < 0.0001){
         // the vehicle did not move
         dot = 0;
@@ -76,15 +88,20 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     else{
         dot = (px * vx + py * vy) / rho;
     }
+    cout << dot << endl;
+     */
 
     VectorXd h(3);
     h << rho, phi, dot;
+
+    cout << "h: " << h << endl;
 
     VectorXd y = z - h;
 
     cout << "y: " << y << endl;
 
     // calling the kalman filter common equations
+    cout << "Calling KF" << y << endl;
     KF(y);
 }
 
