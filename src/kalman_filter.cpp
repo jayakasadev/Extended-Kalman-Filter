@@ -25,7 +25,7 @@ void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in,
  * Prediction Function
  */
 void KalmanFilter::Predict() {
-    // cout << "KalmanFilter::Predict" << endl;
+        // cout << "KalmanFilter::Predict" << endl;
     // calculating the prediction vector -> x'
     x_ = F_ * x_;
 
@@ -63,24 +63,25 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 
     // cout << "KalmanFilter::UpdateEKF: "<< z << " " << z.size() << endl;
 
-    // float px = z(0);
-    // float py = z(1);
-    // float vx = z(2);
-    // float vy = z(3);
+    // extracting x values
+    float px = x_(0);
+    float py = x_(1);
+    float vx = x_(2);
+    float vy = x_(3);
 
     // cout << px << " " << py << " " << vx << " " << vy << endl;
 
-    // float rho = sqrt(pow(px, 2) + pow(py, 2));
-    // float phi = atan2(py, px);
-    // float dot;
+    float rho = sqrt(pow(px, 2) + pow(py, 2));
+    float phi = atan2(py, px);
+    float dot;
 
-    float rho = z(0);
-    float phi = z(1);
-    float dot = z(2);
+    // float rho = z(0);
+    // float phi = z(1);
+    // float dot = z(2);
 
     // cout << rho << " " << phi << " " << dot << endl;
 
-    /*
+
     if(fabs(rho) < 0.0001){
         // the vehicle did not move
         dot = 0;
@@ -88,8 +89,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     else{
         dot = (px * vx + py * vy) / rho;
     }
-    cout << dot << endl;
-     */
+    // cout << dot << endl;
 
     VectorXd h(3);
     h << rho, phi, dot;

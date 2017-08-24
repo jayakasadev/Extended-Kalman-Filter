@@ -117,6 +117,9 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       Convert radar from polar to cartesian coordinates and initialize state.
        range, bearing, rate -> px, py, vx, vy
       */
+
+        // cout << "RADAR: X vector " << measurement_pack.raw_measurements_ << endl;
+
         float rho = measurement_pack.raw_measurements_(0);
         float phi = measurement_pack.raw_measurements_(1);
         float dot = measurement_pack.raw_measurements_(2);
@@ -127,7 +130,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
         ekf_.x_(3) = dot * sin(phi);
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
-        // cout << "LASER" << endl;
+        // cout << "LASER: X vector" << measurement_pack.raw_measurements_ << endl;
       /**
       Initialize state.
       */
@@ -196,18 +199,17 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    */
 
   if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
-      // cout << "RADAR UPDATE" << endl;
+      // cout << "RADAR UPDATE: " << ekf_.x_ << endl;
     // Radar updates
-      Tools tools;
       Hj_ = tools.CalculateJacobian(ekf_.x_);
       ekf_.H_ = Hj_;
       ekf_.R_ = R_radar_;
 
-      cout << "Calling UpdateEKF IN FusionEKF::ProcessMeasurement" << endl;
+      // cout << "Calling UpdateEKF IN FusionEKF::ProcessMeasurement" << endl;
       ekf_.UpdateEKF(measurement_pack.raw_measurements_);
       // cout << "BACK IN FusionEKF::ProcessMeasurement" << endl;
   } else {
-      // cout << "LASER UPDATE" << endl;
+      // cout << "LASER UPDATE: " << ekf_.x_ << endl;
     // Laser updates
       ekf_.H_ = H_laser_;
       ekf_.R_ = R_laser_;
